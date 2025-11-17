@@ -1,8 +1,15 @@
-import { Poppins } from "next/font/google";
+import { Carme, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import LenisScroll from "@/components/lenis-scroll";
 import Footer from "@/components/footer";
+
+const carme = Carme({
+    subsets: ["latin"],
+    variable: "--font-carme",
+    weight: ["400"],
+    display: "swap",
+});
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -12,17 +19,17 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-    title: "agentix - PrebuiltUI",
-    description: "Agentix is a prebuilt UI template for AI-powered SaaS applications.",
+    title: "Nomadsoft – For Nomads, By Nomads",
+    description: "Innovations through code, solutions through vision. We craft responsive web applications that solve real-world problems across multiple industries.",
     appleWebApp: {
-        title: "agentix",
+        title: "Nomadsoft",
     },
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body>
+            <body className={`${carme.variable} ${poppins.variable}`}>
                 <LenisScroll />
                 <Navbar />
                 {children}

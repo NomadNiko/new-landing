@@ -1,23 +1,17 @@
 'use client';
 
-import AboutOurApps from "@/sections/about-our-apps";
-import GetInTouch from "@/sections/get-in-touch";
 import HeroSection from "@/sections/hero-section";
-import OurLatestCreation from "@/sections/our-latest-creation";
-import OurTestimonials from "@/sections/our-testimonials";
-import SubscribeNewsletter from "@/sections/subscribe-newsletter";
-import TrustedCompanies from "@/sections/trusted-companies";
+import PortfolioSection from "@/sections/portfolio-section";
+import TechnologySection from "@/sections/technology-section";
+import ContactSection from "@/sections/contact-section";
 
 export default function Page() {
     return (
-        <main className="px-6 md:px-16 lg:px-24 xl:px-32">
+        <main>
             <HeroSection />
-            <OurLatestCreation />
-            <AboutOurApps />
-            <OurTestimonials />
-            <TrustedCompanies />
-            <GetInTouch />
-            <SubscribeNewsletter />
+            <PortfolioSection />
+            <TechnologySection />
+            <ContactSection />
         </main>
     );
 }

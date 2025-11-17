@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+    --font-carme: "Carme", sans-serif;
     --font-poppins: "Poppins", sans-serif;
+    --color-nomad-navy: rgb(0, 0, 38);
+    --color-nomad-blue: rgb(156, 201, 255);
+    --color-nomad-light-blue: rgb(99, 180, 255);
 }
 
 body {
-    @apply bg-black text-white text-sm font-poppins antialiased;
+    @apply bg-[var(--color-nomad-navy)] text-[var(--color-nomad-blue)] text-base font-carme antialiased;
 }
 
 button {
