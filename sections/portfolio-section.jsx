@@ -1,8 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const products = [
+    {
+        title: "FormBotz",
+        url: "https://formbotz.nomadsoft.us/",
+        github: "https://github.com/NomadNiko/formbotz-nextjs",
+        images: ["/images/formbotz_ss_01.JPG", "/images/formbotz_ss_02.JPG"],
+        description: "A conversational form builder that transforms traditional forms into engaging chat-style conversations. Create forms where questions appear one at a time like a messaging app, complete with typing indicators and smooth animations. Features powerful conditional logic for branching flows, variable interpolation for personalized messages, replay functionality to re-collect answers, automated email notifications and webhooks, CSV/JSON export, analytics dashboard with completion rates, and embeddable widget mode. Perfect for surveys, lead generation, onboarding flows, and any data collection that benefits from a conversational approach. Built with Next.js 15, React 19, TypeScript, and MongoDB, self-hosted in AWS EC2."
+    },
     {
         title: "BarVibez",
         url: "https://barvibez.app/",
@@ -49,6 +59,8 @@ const products = [
 ];
 
 export default function PortfolioSection() {
+    const [lightboxImage, setLightboxImage] = useState(null);
+
     return (
         <section id="portfolio" className="py-20 px-6 md:px-16 lg:px-24 xl:px-32">
             {/* Section Title */}
@@ -97,18 +109,53 @@ export default function PortfolioSection() {
                                     </span>
                                 </Link>
                             )}
+                            {product.github && (
+                                <Link
+                                    href={product.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block"
+                                >
+                                    <span className="text-xs bg-gray-800 hover:bg-gray-900 text-white px-3 py-1.5 rounded-md transition-colors">
+                                        View on GitHub
+                                    </span>
+                                </Link>
+                            )}
                         </div>
 
-                        {/* Product Image */}
-                        <div className="relative w-full lg:w-[70%] lg:mx-auto mb-6 rounded-lg overflow-hidden shadow-xl">
-                            <Image
-                                src={product.image}
-                                alt={product.title}
-                                width={800}
-                                height={450}
-                                className="w-full h-auto"
-                            />
-                        </div>
+                        {/* Product Image(s) */}
+                        {product.images ? (
+                            <div className="w-full mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {product.images.map((img, imgIndex) => (
+                                    <div
+                                        key={imgIndex}
+                                        className="relative rounded-lg overflow-hidden shadow-xl cursor-pointer hover:shadow-2xl transition-shadow"
+                                        onClick={() => setLightboxImage({ src: img, alt: `${product.title} ${imgIndex + 1}` })}
+                                    >
+                                        <Image
+                                            src={img}
+                                            alt={`${product.title} ${imgIndex + 1}`}
+                                            width={800}
+                                            height={533}
+                                            className="w-full h-auto"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div
+                                className="relative w-full lg:w-[91%] lg:mx-auto mb-6 rounded-lg overflow-hidden shadow-xl cursor-pointer hover:shadow-2xl transition-shadow"
+                                onClick={() => setLightboxImage({ src: product.image, alt: product.title })}
+                            >
+                                <Image
+                                    src={product.image}
+                                    alt={product.title}
+                                    width={1040}
+                                    height={585}
+                                    className="w-full h-auto"
+                                />
+                            </div>
+                        )}
 
                         {/* Product Description */}
                         <p className="text-lg leading-relaxed">
@@ -126,6 +173,34 @@ export default function PortfolioSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
             />
+
+            {/* Lightbox Modal */}
+            {lightboxImage && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+                    onClick={() => setLightboxImage(null)}
+                >
+                    <div className="relative max-w-7xl max-h-[90vh] w-full">
+                        {/* Close button */}
+                        <button
+                            className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors text-4xl font-light"
+                            onClick={() => setLightboxImage(null)}
+                        >
+                            ×
+                        </button>
+                        {/* Image */}
+                        <div className="relative w-full h-full" onClick={(e) => e.stopPropagation()}>
+                            <Image
+                                src={lightboxImage.src}
+                                alt={lightboxImage.alt}
+                                width={1920}
+                                height={1080}
+                                className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

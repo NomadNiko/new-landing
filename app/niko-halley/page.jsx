@@ -12,11 +12,48 @@ export default function NikoHalleyPage() {
         message: ''
     });
 
-    const handleSubmit = (e) => {
+    const [contactStatus, setContactStatus] = useState({
+        loading: false,
+        message: '',
+        error: false
+    });
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        alert('Thank you for contacting Niko! I will get back to you soon.');
-        setFormData({ firstName: '', lastName: '', email: '', message: '' });
+        setContactStatus({ loading: true, message: '', error: false });
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setContactStatus({
+                    loading: false,
+                    message: data.message || 'Message sent successfully!',
+                    error: false
+                });
+                setFormData({ firstName: '', lastName: '', email: '', message: '' });
+            } else {
+                setContactStatus({
+                    loading: false,
+                    message: data.error || 'Failed to send message. Please try again.',
+                    error: true
+                });
+            }
+        } catch (error) {
+            setContactStatus({
+                loading: false,
+                message: 'An error occurred. Please try again later.',
+                error: true
+            });
+        }
     };
 
     const handleChange = (e) => {
@@ -181,11 +218,27 @@ export default function NikoHalleyPage() {
                         <div>
                             <button
                                 type="submit"
-                                className="w-full md:w-auto px-12 py-3 bg-[var(--color-nomad-light-blue)] hover:bg-[var(--color-nomad-blue)] text-white font-semibold rounded-md transition-colors duration-300 active:scale-95"
+                                disabled={contactStatus.loading}
+                                className="w-full md:w-auto px-12 py-3 bg-[var(--color-nomad-light-blue)] hover:bg-[var(--color-nomad-blue)] text-white font-semibold rounded-md transition-colors duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Submit
+                                {contactStatus.loading ? 'Sending...' : 'Submit'}
                             </button>
                         </div>
+
+                        {/* Status Message */}
+                        {contactStatus.message && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className={`p-4 rounded-md ${
+                                    contactStatus.error
+                                        ? 'bg-red-500/20 border border-red-500/50 text-red-200'
+                                        : 'bg-green-500/20 border border-green-500/50 text-green-200'
+                                }`}
+                            >
+                                {contactStatus.message}
+                            </motion.div>
+                        )}
                     </form>
                 </motion.div>
             </div>

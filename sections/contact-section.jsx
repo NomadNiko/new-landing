@@ -10,14 +10,37 @@ export default function ContactSection() {
         email: '',
         message: ''
     });
+    const [contactStatus, setContactStatus] = useState({ loading: false, message: '', error: false });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted:', formData);
-        // You can add your form submission logic here
-        alert('Thank you for contacting Nomadsoft! We will get back to you soon.');
-        setFormData({ firstName: '', lastName: '', email: '', message: '' });
+        setContactStatus({ loading: true, message: '', error: false });
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setContactStatus({ loading: false, message: data.message, error: false });
+                setFormData({ firstName: '', lastName: '', email: '', message: '' });
+            } else {
+                setContactStatus({ loading: false, message: data.error || 'Failed to send message', error: true });
+            }
+        } catch (error) {
+            setContactStatus({ loading: false, message: 'Network error. Please try again.', error: true });
+        }
+
+        // Clear message after 5 seconds
+        setTimeout(() => {
+            setContactStatus({ loading: false, message: '', error: false });
+        }, 5000);
     };
 
     const handleChange = (e) => {
@@ -114,13 +137,23 @@ export default function ContactSection() {
                         />
                     </div>
 
+                    {/* Status Message */}
+                    {contactStatus.message && (
+                        <div className={`p-4 rounded-md ${contactStatus.error ? 'bg-red-500/20 border border-red-500' : 'bg-green-500/20 border border-green-500'}`}>
+                            <p className={contactStatus.error ? 'text-red-300' : 'text-green-300'}>
+                                {contactStatus.message}
+                            </p>
+                        </div>
+                    )}
+
                     {/* Submit Button */}
                     <div>
                         <button
                             type="submit"
-                            className="w-full md:w-auto px-12 py-3 bg-[var(--color-nomad-light-blue)] hover:bg-[var(--color-nomad-blue)] text-white font-semibold rounded-md transition-colors duration-300 active:scale-95"
+                            disabled={contactStatus.loading}
+                            className="w-full md:w-auto px-12 py-3 bg-[var(--color-nomad-light-blue)] hover:bg-[var(--color-nomad-blue)] text-white font-semibold rounded-md transition-colors duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            Submit
+                            {contactStatus.loading ? 'Sending...' : 'Submit'}
                         </button>
                     </div>
                 </motion.form>
