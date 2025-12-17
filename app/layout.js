@@ -24,6 +24,11 @@ export const metadata = {
     appleWebApp: {
         title: "Nomadsoft",
     },
+    icons: {
+        icon: [
+            { url: '/favicon.ico?v=20251121', sizes: '48x48', type: 'image/x-icon' }
+        ],
+    },
 };
 
 export default function RootLayout({ children }) {

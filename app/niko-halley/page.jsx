@@ -1,5 +1,6 @@
 'use client';
 
+import Script from "next/script";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -62,7 +63,8 @@ export default function NikoHalleyPage() {
     };
 
     return (
-        <main>
+        <>
+            <main>
             {/* Page Banner */}
             <motion.div
                 className="w-full bg-blue-900/30 py-6 mb-12"
@@ -242,6 +244,11 @@ export default function NikoHalleyPage() {
                     </form>
                 </motion.div>
             </div>
-        </main>
+            </main>
+            <Script
+                src="https://formbotz.nomadsoft.us/api/widget/contact-nomadsoft-960d396d/loader.js"
+                strategy="lazyOnload"
+            />
+        </>
     );
 }
