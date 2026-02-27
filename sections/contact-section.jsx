@@ -22,6 +22,7 @@ export default function ContactSection() {
         const email = searchParams.get('email') || '';
         const application = searchParams.get('application') || searchParams.get('app') || 'Nomadsoft';
         const revenueCatId = searchParams.get('revenueCatId') || searchParams.get('rcId') || '';
+        const message = searchParams.get('message') || '';
 
         setFormData({
             firstName,
@@ -29,7 +30,7 @@ export default function ContactSection() {
             email,
             application,
             revenueCatId,
-            message: ''
+            message
         });
     }, [searchParams]);
 

@@ -31,6 +31,7 @@ The contact form supports URL query parameters to prefill form fields. This is u
 - `email` - User's email address
 - `application` or `app` - Application name (e.g., "BarVibez", "Fridge Raid")
 - `revenueCatId` or `rcId` - RevenueCat user ID
+- `message` - Pre-filled message or comment text
 
 ### Example URLs
 
