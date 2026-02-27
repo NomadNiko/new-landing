@@ -14,6 +14,18 @@ const products = [
         description: "A conversational form builder that transforms traditional forms into engaging chat-style conversations. Create forms where questions appear one at a time like a messaging app, complete with typing indicators and smooth animations. Features powerful conditional logic for branching flows, variable interpolation for personalized messages, replay functionality to re-collect answers, automated email notifications and webhooks, CSV/JSON export, analytics dashboard with completion rates, and embeddable widget mode. Perfect for surveys, lead generation, onboarding flows, and any data collection that benefits from a conversational approach. Built with Next.js 15, React 19, TypeScript, and MongoDB, self-hosted in AWS EC2."
     },
     {
+        title: "Fridge Raid",
+        url: "/fridge-raid",
+        github: "https://github.com/NomadNiko/fridge-raid",
+        screenshots: [
+            "/images/fridge-view.PNG",
+            "/images/recipe-search.PNG",
+            "/images/shopping-list.PNG",
+            "/images/paywall.PNG",
+        ],
+        description: "Turn your ingredients into delicious meals. Fridge Raid lets you add ingredients you have at home and instantly matches them to 500 hand-refined recipes across 20 cuisines. Features smart recipe suggestions ranked by ingredient overlap, personal cookbook, auto-generated shopping lists, unit conversion, and AI-powered recipe import via camera OCR or URL using Amazon Bedrock. Built with React Native/Expo, TypeScript, and RevenueCat for the Ship-a-ton Hackathon."
+    },
+    {
         title: "BarVibez",
         url: "https://barvibez.app/",
         appStore: "https://apps.apple.com/us/app/bar-vibez/id6749613591",
@@ -124,7 +136,25 @@ export default function PortfolioSection() {
                         </div>
 
                         {/* Product Image(s) */}
-                        {product.images ? (
+                        {product.screenshots ? (
+                            <div className="w-full mb-6 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                                {product.screenshots.map((img, imgIndex) => (
+                                    <div
+                                        key={imgIndex}
+                                        className="relative rounded-xl overflow-hidden shadow-xl cursor-pointer hover:shadow-2xl transition-shadow border border-white/10"
+                                        onClick={() => setLightboxImage({ src: img, alt: `${product.title} screenshot ${imgIndex + 1}` })}
+                                    >
+                                        <Image
+                                            src={img}
+                                            alt={`${product.title} screenshot ${imgIndex + 1}`}
+                                            width={375}
+                                            height={812}
+                                            className="w-full h-auto"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : product.images ? (
                             <div className="w-full mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {product.images.map((img, imgIndex) => (
                                     <div

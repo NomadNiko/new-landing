@@ -20,6 +20,28 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Contact Form URL Parameters
+
+The contact form supports URL query parameters to prefill form fields. This is useful for linking from iOS apps or other websites.
+
+### Supported Parameters
+
+- `firstName` or `firstname` - User's first name
+- `lastName` or `lastname` - User's last name
+- `email` - User's email address
+- `application` or `app` - Application name (e.g., "BarVibez", "Fridge Raid")
+- `revenueCatId` or `rcId` - RevenueCat user ID
+
+### Example URLs
+
+```
+https://nomadsoft.us/contact?firstName=John&lastName=Doe&email=john@example.com&application=BarVibez&revenueCatId=abc123
+
+https://nomadsoft.us/#contact?app=Fridge%20Raid&rcId=xyz789&email=user@example.com
+```
+
+All parameters are optional. The form will automatically populate with any provided values when the page loads.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

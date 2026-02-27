@@ -4,7 +4,7 @@ import { sendContactFormSubmission } from '@/lib/utils/email';
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { firstName, lastName, email, message } = body;
+    const { firstName, lastName, email, application, revenueCatId, message } = body;
 
     // Validate required fields
     if (!firstName || !firstName.trim()) {
@@ -38,7 +38,7 @@ export async function POST(request) {
     }
 
     // Send email notification
-    await sendContactFormSubmission({ firstName, lastName, email, message });
+    await sendContactFormSubmission({ firstName, lastName, email, application, revenueCatId, message });
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully! We will get back to you soon.' },

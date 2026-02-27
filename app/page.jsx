@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from "react";
 import Script from "next/script";
 import HeroSection from "@/sections/hero-section";
 import PortfolioSection from "@/sections/portfolio-section";
@@ -13,7 +14,9 @@ export default function Page() {
                 <HeroSection />
                 <PortfolioSection />
                 <TechnologySection />
-                <ContactSection />
+                <Suspense fallback={<div className="py-20 px-6 text-center">Loading...</div>}>
+                    <ContactSection />
+                </Suspense>
             </main>
             <Script
                 src="https://formbotz.nomadsoft.us/api/widget/contact-nomadsoft-960d396d/loader.js"

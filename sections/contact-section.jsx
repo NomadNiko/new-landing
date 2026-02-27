@@ -1,16 +1,37 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 
 export default function ContactSection() {
+    const searchParams = useSearchParams();
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
+        application: 'Nomadsoft',
+        revenueCatId: '',
         message: ''
     });
     const [contactStatus, setContactStatus] = useState({ loading: false, message: '', error: false });
+
+    useEffect(() => {
+        const firstName = searchParams.get('firstName') || searchParams.get('firstname') || '';
+        const lastName = searchParams.get('lastName') || searchParams.get('lastname') || '';
+        const email = searchParams.get('email') || '';
+        const application = searchParams.get('application') || searchParams.get('app') || 'Nomadsoft';
+        const revenueCatId = searchParams.get('revenueCatId') || searchParams.get('rcId') || '';
+
+        setFormData({
+            firstName,
+            lastName,
+            email,
+            application,
+            revenueCatId,
+            message: ''
+        });
+    }, [searchParams]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,7 +50,7 @@ export default function ContactSection() {
 
             if (response.ok) {
                 setContactStatus({ loading: false, message: data.message, error: false });
-                setFormData({ firstName: '', lastName: '', email: '', message: '' });
+                setFormData({ firstName: '', lastName: '', email: '', application: 'Nomadsoft', revenueCatId: '', message: '' });
             } else {
                 setContactStatus({ loading: false, message: data.error || 'Failed to send message', error: true });
             }
@@ -118,6 +139,47 @@ export default function ContactSection() {
                             required
                             className="w-full px-4 py-3 bg-white/10 border border-[var(--color-nomad-blue)]/30 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-[var(--color-nomad-light-blue)] focus:ring-1 focus:ring-[var(--color-nomad-light-blue)] transition"
                             placeholder="your@email.com"
+                        />
+                    </div>
+
+                    {/* Application Dropdown */}
+                    <div>
+                        <label htmlFor="application" className="block text-lg mb-3 text-[var(--color-nomad-blue)]">
+                            Application
+                        </label>
+                        <select
+                            id="application"
+                            name="application"
+                            value={formData.application}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-white/10 border border-[var(--color-nomad-blue)]/30 rounded-md text-white focus:outline-none focus:border-[var(--color-nomad-light-blue)] focus:ring-1 focus:ring-[var(--color-nomad-light-blue)] transition [&>option]:bg-[#1e3a8a] [&>option]:text-white"
+                        >
+                            <option value="Nomadsoft">Nomadsoft</option>
+                            <option value="FormBotz">FormBotz</option>
+                            <option value="Fridge Raid">Fridge Raid</option>
+                            <option value="BarVibez">BarVibez</option>
+                            <option value="Quotable by Nomadsoft">Quotable by Nomadsoft</option>
+                            <option value="iXplor">iXplor</option>
+                            <option value="MenuTraining">MenuTraining</option>
+                            <option value="EasyTix">EasyTix</option>
+                            <option value="iXplor Merch">iXplor Merch</option>
+                            <option value="iXplor Travel">iXplor Travel</option>
+                        </select>
+                    </div>
+
+                    {/* RevenueCat ID Field */}
+                    <div>
+                        <label htmlFor="revenueCatId" className="block text-lg mb-3 text-[var(--color-nomad-blue)]">
+                            RevenueCat ID
+                        </label>
+                        <input
+                            type="text"
+                            id="revenueCatId"
+                            name="revenueCatId"
+                            value={formData.revenueCatId}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 bg-white/10 border border-[var(--color-nomad-blue)]/30 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-[var(--color-nomad-light-blue)] focus:ring-1 focus:ring-[var(--color-nomad-light-blue)] transition"
+                            placeholder="Optional"
                         />
                     </div>
 

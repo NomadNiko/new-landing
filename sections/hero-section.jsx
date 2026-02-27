@@ -65,7 +65,7 @@ export default function HeroSection() {
                 transition={{ delay: 0.6, duration: 0.5 }}
             >
                 <Link
-                    href="/niko-halley"
+                    href="/niko"
                     className="inline-block px-8 py-3 bg-[var(--color-nomad-light-blue)] hover:bg-[var(--color-nomad-blue)] text-white font-semibold rounded-md transition-colors duration-300 active:scale-95"
                 >
                     Meet Niko

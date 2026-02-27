@@ -1,25 +1,13 @@
 'use client';
 
 import { useState } from "react";
-import { MenuIcon, XIcon, ChevronDownIcon } from "lucide-react";
+import { MenuIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const templates = [
-    { name: "AgentiX", url: "https://agentix.nomadsoft.us" },
-    { name: "Pixels", url: "https://pixels.nomadsoft.us" },
-    { name: "Portfolio", url: "https://portfolio.nomadsoft.us" },
-    { name: "SaaS", url: "https://saas.nomadsoft.us" },
-    { name: "Saasly", url: "https://saasly.nomadsoft.us" },
-    { name: "SlideX", url: "https://slidex.nomadsoft.us" },
-    { name: "Spark", url: "https://spark.nomadsoft.us" }
-];
-
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isTemplatesOpen, setIsTemplatesOpen] = useState(false);
-    const [isMobileTemplatesOpen, setIsMobileTemplatesOpen] = useState(false);
 
     return (
         <>
@@ -51,37 +39,7 @@ export default function Navbar() {
                     <Link href="/#portfolio" className="text-gray-900 hover:text-blue-600 transition">
                         Portfolio
                     </Link>
-
-                    {/* Templates Dropdown */}
-                    <div
-                        className="relative"
-                        onMouseEnter={() => setIsTemplatesOpen(true)}
-                        onMouseLeave={() => setIsTemplatesOpen(false)}
-                    >
-                        <button className="flex items-center gap-1 text-gray-900 hover:text-blue-600 transition py-2">
-                            Our Templates
-                            <ChevronDownIcon className="size-4" />
-                        </button>
-                        {isTemplatesOpen && (
-                            <div className="absolute top-full left-0 pt-2 -mt-2">
-                                <div className="w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2">
-                                    {templates.map((template) => (
-                                        <a
-                                            key={template.name}
-                                            href={template.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="block px-4 py-2 text-gray-900 hover:bg-blue-50 hover:text-blue-600 transition"
-                                        >
-                                            {template.name}
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <Link href="/niko-halley" className="text-gray-900 hover:text-blue-600 transition">
+                    <Link href="/niko" className="text-gray-900 hover:text-blue-600 transition">
                         Meet Niko
                     </Link>
                     <Link href="/#contact" className="text-gray-900 hover:text-blue-600 transition">
@@ -101,35 +59,7 @@ export default function Navbar() {
                 <Link href="/#portfolio" onClick={() => setIsMenuOpen(false)} className="hover:text-slate-300 transition">
                     Portfolio
                 </Link>
-
-                {/* Mobile Templates Dropdown */}
-                <div className="flex flex-col items-center gap-2">
-                    <button
-                        onClick={() => setIsMobileTemplatesOpen(!isMobileTemplatesOpen)}
-                        className="flex items-center gap-1 hover:text-slate-300 transition"
-                    >
-                        Our Templates
-                        <ChevronDownIcon className={`size-4 transition-transform ${isMobileTemplatesOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    {isMobileTemplatesOpen && (
-                        <div className="flex flex-col items-center gap-2 text-base">
-                            {templates.map((template) => (
-                                <a
-                                    key={template.name}
-                                    href={template.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="text-slate-300 hover:text-white transition"
-                                >
-                                    {template.name}
-                                </a>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                <Link href="/niko-halley" onClick={() => setIsMenuOpen(false)} className="hover:text-slate-300 transition">
+                <Link href="/niko" onClick={() => setIsMenuOpen(false)} className="hover:text-slate-300 transition">
                     Meet Niko
                 </Link>
                 <Link href="/#contact" onClick={() => setIsMenuOpen(false)} className="hover:text-slate-300 transition">
